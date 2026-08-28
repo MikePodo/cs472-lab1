@@ -8,7 +8,7 @@ repo = "scottyab/rootbeer"
 
 repo_name = repo.split("/")[1]
 json_path = f"data/mikepodo_authors_rootbeer.json"
-plot_path = f"data/mikepodo_file_activity.png"
+plot_path = f"mikepodo_file_activity.png"
 
 
 def parse_date(value):
