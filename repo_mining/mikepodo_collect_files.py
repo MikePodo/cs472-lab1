@@ -35,14 +35,15 @@ def is_source(filename):
 # @dictFiles, empty dictionary of files
 # @token, GitHub authentication token
 # @repo, GitHub repo
-def countfiles(dictfiles, token, repo):
+# @branch, GitHub branch
+def countfiles(dictfiles, token, repo, branch):
     ipage = 1  # url page counter
 
     try:
         # loop though all the commit pages until the last returned empty page
         while True:
             spage = str(ipage)
-            commitsUrl = 'https://api.github.com/repos/' + repo + '/commits?page=' + spage + '&per_page=100'
+            commitsUrl = 'https://api.github.com/repos/' + repo + '/commits?sha=' + branch + '&page=' + spage + '&per_page=100'
             jsonCommits = github_auth(commitsUrl, token)
 
             # break out of the while loop if there are no more commits in the pages
@@ -77,8 +78,10 @@ token = os.getenv("MIKEPODO_GH_TOKEN")
 if not token:
     raise SystemExit("Set MIKEPODO_GH_TOKEN in repo_mining/.env")
 
+branch = 'master'
+
 dictfiles = dict()
-countfiles(dictfiles, token, repo)
+countfiles(dictfiles, token, repo, branch)
 print('Total number of files: ' + str(len(dictfiles)))
 
 file = repo.split('/')[1]
