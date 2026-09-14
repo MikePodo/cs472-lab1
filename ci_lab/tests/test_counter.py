@@ -146,7 +146,8 @@ class TestCounterEndpoints:
         # Flask serializes JSON with sorted keys, so the top 2 come back
         # keyed alphabetically rather than in descending value order.
         expected = [("a", 1), ("b", 2)]
-        assert list(response.get_json().items()) == expected
+        for actual, want in zip(response.get_json().items(), expected, strict=True):
+            assert actual == want
 
     # ===========================
     # Test: Retrieve top N lowest counters
